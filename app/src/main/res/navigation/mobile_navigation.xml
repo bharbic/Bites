@@ -15,20 +15,58 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.example.bites.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+
+        <action
+            android:id="@+id/action_dashboardFragment_to_shopMenuFragment"
+            app:destination="@id/shopMenuFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.bites.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_notifications" >
+        <argument
+            android:name="cartItems"
+            app:argType="com.example.bites.data.entity.CartDisplayItem[]"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <!-- REMOVE THIS ACTION FROM HERE, it belongs in the source fragment (ShopMenuFragment) -->
+        <!-- <action
+            android:id="@+id/action_shopMenuFragment_to_notificationsFragment"
+            app:destination="@id/navigation_notifications" /> -->
+    </fragment>
 
-    <action
-        android:id="@+id/action_homeToDash"
-        app:destination="@id/navigation_dashboard"
-        app:enterAnim="@anim/nav_default_enter_anim"
-        app:exitAnim="@anim/nav_default_exit_anim"
-        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+<action
+android:id="@+id/action_homeToDash"
+app:destination="@id/navigation_dashboard"
+app:enterAnim="@anim/nav_default_enter_anim"
+app:exitAnim="@anim/nav_default_exit_anim"
+app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
-</navigation>
+<fragment
+android:id="@+id/shopMenuFragment"
+android:name="com.example.bites.ui.dashboard.ShopMenuFragment"
+android:label="{shopName}"
+tools:layout="@layout/fragment_shop_menu" >
+
+<argument
+    android:name="shopId"
+    app:argType="string" />
+
+<argument
+    android:name="shopName"
+    app:argType="string"
+    app:nullable="true"
+    android:defaultValue="Menu" />
+
+<!-- **** ADD THIS ACTION **** -->
+<action
+    android:id="@+id/action_shopMenuFragment_to_notificationsFragment"
+    app:destination="@id/navigation_notifications" />
+<!-- **** END OF ADDED ACTION **** -->
+</fragment>
+
+    </navigation>

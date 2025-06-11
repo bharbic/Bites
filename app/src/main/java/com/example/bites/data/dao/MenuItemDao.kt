@@ -16,7 +16,7 @@ interface MenuItemDao {
     fun getMenuItemById(id: Int): Flow<MenuItemEntity?>
 
     @Query("SELECT * FROM menu_item WHERE shopID = :shopId")
-    fun getMenuItemsForShop(shopId: Int): Flow<List<MenuItemEntity>>
+    fun getMenuItemsForShop(shopId: String): Flow<List<MenuItemEntity>>
 
     @Query("SELECT * FROM menu_item WHERE shopID = :shopId AND Availability = 1")
     fun getAvailableMenuItemsForShop(shopId: Int): Flow<List<MenuItemEntity>>

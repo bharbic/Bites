@@ -1,15 +1,18 @@
 package com.example.bites.ui.dashboard
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel // Correct import
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import com.example.bites.data.AppDatabase
+import com.example.bites.data.entity.ShopEntity
 
-class DashboardViewModel : ViewModel() {
+// Ensure your ShopDao.getAllShops() returns Flow<List<ShopEntity>>
+// or if it returns LiveData directly, adjust the assignment below.
 
-    private val user = "BH"
+class DashboardViewModel(application: Application) : AndroidViewModel(application) { // Correctly extends AndroidViewModel
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "Hello, $user! What are we ordering today?"
-    }
-    val text: LiveData<String> = _text
+    private val shopDao = AppDatabase.getInstance(application).shopDao()
+
+    val allShops: LiveData<List<ShopEntity>> = shopDao.getAllShops().asLiveData()
 }

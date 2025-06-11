@@ -48,7 +48,7 @@ data class OrderEntity(
     @ColumnInfo(name = "SpecialRequest")
     val specialRequest: String?,
 
-    @ColumnInfo(name = "PaymentStatus", defaultValue = "Not paid")
+    @ColumnInfo(name = "PaymentStatus", defaultValue = "Unpaid")
     val paymentStatus: String, // Validate ('Paid', 'Pending', 'Not paid') in business logic
 
     @ColumnInfo(name = "DeliveryStatus", defaultValue = "Pending")

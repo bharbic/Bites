@@ -4,12 +4,15 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import android.os.Parcelable // Import Parcelable
+import kotlinx.parcelize.Parcelize // Import Parcelize
 
+@Parcelize // Add this annotation
 @Entity(
     tableName = "menu_item",
     foreignKeys = [
         ForeignKey(
-            entity = ShopEntity::class,
+            entity = ShopEntity::class, // Make sure ShopEntity is defined and accessible
             parentColumns = ["shopID"],
             childColumns = ["shopID"],
             onDelete = ForeignKey.CASCADE
@@ -17,7 +20,7 @@ import androidx.room.PrimaryKey
     ]
 )
 data class MenuItemEntity(
-    @PrimaryKey // Not auto-generated
+    @PrimaryKey
     @ColumnInfo(name = "itemID")
     val itemID: Int,
 
@@ -31,8 +34,8 @@ data class MenuItemEntity(
     val description: String?,
 
     @ColumnInfo(name = "Price")
-    val price: Double, // REAL maps to Double
+    val price: Double,
 
     @ColumnInfo(name = "Availability", defaultValue = "1")
-    val availability: Boolean // Room handles Boolean to INT (0/1)
-)
+    val availability: Boolean
+) : Parcelable // Implement Parcelable

@@ -1,26 +1,20 @@
-package com.example.bites.data.dao
+package com.example.bites.data.dao // Or your DAO package
 
-import androidx.room.*
+import androidx.lifecycle.LiveData // Only if you decide to return LiveData directly from DAO
+import androidx.room.Dao
+import androidx.room.Query
 import com.example.bites.data.entity.ShopEntity
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.Flow // This is what we expect for .asLiveData()
 
 @Dao
 interface ShopDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertShop(shop: ShopEntity)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllShops(shops: List<ShopEntity>)
-
-    @Update
-    suspend fun updateShop(shop: ShopEntity)
-
-    @Query("SELECT * FROM Shops WHERE shopID = :id")
-    fun getShopById(id: Int): Flow<ShopEntity?>
+    // ... any other DAO methods you have (insert, update, delete, etc.)
 
     @Query("SELECT * FROM Shops")
-    fun getAllShops(): Flow<List<ShopEntity>>
+    fun getAllShops(): Flow<List<ShopEntity>> // << this is what you have
 
-    @Query("SELECT * FROM Shops WHERE Type = :type")
-    fun getShopsByType(type: String): Flow<List<ShopEntity>>
+    // ALTERNATIVE (if you preferred LiveData directly from DAO, though Flow is often more flexible):
+    // @Query("SELECT * FROM Shops")
+    // fun getAllShops(): LiveData<List<ShopEntity>>
 }
