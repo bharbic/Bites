@@ -20,4 +20,5 @@ interface OrderDao {
 
     @Query("SELECT * FROM orders WHERE courierID = :courierId ORDER BY orderID DESC")
     fun getOrdersForCourier(courierId: Int): Flow<List<OrderEntity>>
+
 }

@@ -4,6 +4,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin") version "2.9.0"
     id("com.google.devtools.ksp") version "2.1.21-2.0.1"
     id("kotlin-parcelize")
+
 }
 
 android {
@@ -49,7 +50,9 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.firebase.inappmessaging)
-    implementation(libs.androidx.ui.android) // For Kotlin Coroutines support (Flow, etc.)
+    implementation(libs.androidx.ui.android)
+    implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.media3.common.ktx) // For Kotlin Coroutines support (Flow, etc.)
     ksp(libs.androidx.room.compiler)
 
 

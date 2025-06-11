@@ -3,5 +3,10 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Shops</string>
     <string name="title_notifications">Orders</string>
+    <string-array name="cutlery_options_array">
+        <item>No</item>
+        <item>Yes</item>
+    </string-array>
+    <string name="dashboard_title_shops">Explore Shops</string>
     <string name="start_button">Get Started</string>
 </resources>

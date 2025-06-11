@@ -1,71 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="6dp"
+    app:cardElevation="3dp"
+    app:cardCornerRadius="12dp"
     android:clickable="true"
     android:focusable="true"
-    android:background="?android:attr/selectableItemBackground"
-    tools:ignore="ExtraText">
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        tools:layout_editor_absoluteY="1dp">
+
+        <!-- ImageView for the menu item photo -->
+        <ImageView
+            android:id="@+id/imageViewMenuItemPhoto"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <!-- TextView for the menu item name -->
+        <TextView
+            android:id="@+id/textViewMenuItemName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/buttonAddToCart"
+            app:layout_constraintStart_toEndOf="@id/imageViewMenuItemPhoto"
+            app:layout_constraintTop_toTopOf="@id/imageViewMenuItemPhoto"
+            tools:text="Delicious Item Name" />
 
 
-    <ImageView
-        android:id="@+id/imageViewMenuItemPhoto"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
-    -->
+        <TextView
+            android:id="@+id/textViewMenuItemDescription"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintBottom_toTopOf="@id/textViewMenuItemPrice"
+            app:layout_constraintEnd_toEndOf="@id/textViewMenuItemName"
+            app:layout_constraintStart_toStartOf="@id/textViewMenuItemName"
+            app:layout_constraintTop_toBottomOf="@id/textViewMenuItemName"
+            tools:text="A short and enticing description of what this menu item is all about, maybe some key ingredients." />
 
-    <TextView
-        android:id="@+id/textViewMenuItemName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        android:textStyle="bold"
-        tools:text="Delicious Item Name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonAddToCart"
-        android:layout_marginEnd="8dp"/>
+        <!-- TextView for the menu item price -->
+        <TextView
+            android:id="@+id/textViewMenuItemPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/imageViewMenuItemPhoto"
+            app:layout_constraintStart_toStartOf="@id/textViewMenuItemName"
+            app:layout_constraintTop_toBottomOf="@id/textViewMenuItemDescription"
+            tools:text="$9.99" />
 
-    <TextView
-        android:id="@+id/textViewMenuItemDescription"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceBody2"
-        android:layout_marginTop="4dp"
-        tools:text="A short and enticing description of what this menu item is all about, maybe some key ingredients."
-        app:layout_constraintStart_toStartOf="@id/textViewMenuItemName"
-        app:layout_constraintTop_toBottomOf="@id/textViewMenuItemName"
-        app:layout_constraintEnd_toEndOf="@id/textViewMenuItemName"/>
 
-    <TextView
-        android:id="@+id/textViewMenuItemPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceSubtitle1"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"
-        tools:text="$9.99"
-        app:layout_constraintStart_toStartOf="@id/textViewMenuItemDescription"
-        app:layout_constraintTop_toBottomOf="@id/textViewMenuItemDescription"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        <!-- Button to add the item to the cart -->
+        <Button
+            android:id="@+id/buttonAddToCart"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            app:icon="@drawable/ic_home_black_24dp"
+            app:layout_constraintBottom_toBottomOf="@id/textViewMenuItemPrice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewMenuItemName" />
 
-    <Button
-        android:id="@+id/buttonAddToCart"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add to order"
-        app:icon="@drawable/ic_notifications_black_24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textViewMenuItemName"
-        app:layout_constraintBottom_toBottomOf="@id/textViewMenuItemName"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>

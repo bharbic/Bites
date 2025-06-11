@@ -9,14 +9,28 @@
         android:id="@+id/navigation_home"
         android:name="com.example.bites.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_editProfileFragment"
+            app:destination="@id/editProfileFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action
+            android:id="@+id/action_homeToDash"
+            app:destination="@id/navigation_dashboard" />
+        <!-- ADD THIS ACTION for navigating from Home to Order History -->
+        <action
+            android:id="@+id/action_homeFragment_to_orderHistoryFragment"
+            app:destination="@id/orderHistoryFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.bites.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" >
-
         <action
             android:id="@+id/action_dashboardFragment_to_shopMenuFragment"
             app:destination="@id/shopMenuFragment" />
@@ -26,47 +40,82 @@
         android:id="@+id/navigation_notifications"
         android:name="com.example.bites.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" >
+        tools:layout="@layout/fragment_notifications">
         <argument
             android:name="cartItems"
             app:argType="com.example.bites.data.entity.CartDisplayItem[]"
             app:nullable="true"
             android:defaultValue="@null" />
-        <!-- REMOVE THIS ACTION FROM HERE, it belongs in the source fragment (ShopMenuFragment) -->
-        <!-- <action
-            android:id="@+id/action_shopMenuFragment_to_notificationsFragment"
-            app:destination="@id/navigation_notifications" /> -->
+        <action
+            android:id="@+id/action_navigation_notifications_to_checkoutFragment"
+            app:destination="@id/checkoutFragment">
+            <argument
+                android:name="checkoutCartItems"
+                app:argType="com.example.bites.data.entity.CartDisplayItem[]"
+                app:nullable="true" />
+        </action>
     </fragment>
 
-<action
-android:id="@+id/action_homeToDash"
-app:destination="@id/navigation_dashboard"
-app:enterAnim="@anim/nav_default_enter_anim"
-app:exitAnim="@anim/nav_default_exit_anim"
-app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="com.example.bites.ui.notifications.CheckoutFragment"
+        android:label="Checkout"
+        tools:layout="@layout/fragment_checkout" >
+        <argument
+            android:name="checkoutCartItems"
+            app:argType="com.example.bites.data.entity.CartDisplayItem[]"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_orderConfirmationFragment"
+            app:destination="@id/orderConfirmationFragment"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="false"/>
+    </fragment>
 
-<fragment
-android:id="@+id/shopMenuFragment"
-android:name="com.example.bites.ui.dashboard.ShopMenuFragment"
-android:label="{shopName}"
-tools:layout="@layout/fragment_shop_menu" >
+    <fragment
+        android:id="@+id/orderConfirmationFragment"
+        android:name="com.example.bites.ui.notifications.OrderConfirmationFragment"
+        android:label="Order Confirmed"
+        tools:layout="@layout/fragment_order_confirmation">
+        <argument
+            android:name="orderId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_orderConfirmationFragment_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
+    </fragment>
 
-<argument
-    android:name="shopId"
-    app:argType="string" />
+    <fragment
+        android:id="@+id/shopMenuFragment"
+        android:name="com.example.bites.ui.dashboard.ShopMenuFragment"
+        android:label="{shopName}"
+        tools:layout="@layout/fragment_shop_menu" >
+        <argument
+            android:name="shopId"
+            app:argType="string" />
+        <argument
+            android:name="shopName"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="Menu" />
+        <action
+            android:id="@+id/action_shopMenuFragment_to_notificationsFragment"
+            app:destination="@id/navigation_notifications" />
+    </fragment>
 
-<argument
-    android:name="shopName"
-    app:argType="string"
-    app:nullable="true"
-    android:defaultValue="Menu" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.bites.ui.profile.EditProfileFragment"
+        android:label="Edit Profile"
+        tools:layout="@layout/fragment_edit_profile" />
 
-<!-- **** ADD THIS ACTION **** -->
-<action
-    android:id="@+id/action_shopMenuFragment_to_notificationsFragment"
-    app:destination="@id/navigation_notifications" />
-<!-- **** END OF ADDED ACTION **** -->
-</fragment>
+    <!-- DEFINE OrderHistoryFragment as a top-level destination -->
+    <fragment
+        android:id="@+id/orderHistoryFragment"
+        android:name="com.example.bites.ui.home.OrderHistoryFragment"
+        android:label="My Orders"
+        tools:layout="@layout/fragment_order_history" />
 
-    </navigation>
+</navigation>

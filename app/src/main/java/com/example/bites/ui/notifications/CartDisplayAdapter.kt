@@ -2,19 +2,19 @@ package com.example.bites.ui.notifications // Or your chosen package
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.ui.semantics.text
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bites.data.entity.CartDisplayItem // Ensure correct import
 import com.example.bites.databinding.ItemCartDisplayBinding // Generated ViewBinding class
-// If you plan to use image loading, uncomment and add Glide/Coil dependency
-// import com.bumptech.glide.Glide
-// import com.example.bites.R // For placeholder/error drawables if using Glide
 
-class CartDisplayAdapter : ListAdapter<CartDisplayItem, CartDisplayAdapter.ViewHolder>(CartDiffCallback()) {
+// Add a lambda to the constructor for the remove action
+class CartDisplayAdapter(
+    private val onRemoveClicked: (CartDisplayItem) -> Unit // Callback for remove action
+) : ListAdapter<CartDisplayItem, CartDisplayAdapter.ViewHolder>(CartDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        // Inflate the layout using ViewBinding
         val binding = ItemCartDisplayBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
@@ -29,45 +29,33 @@ class CartDisplayAdapter : ListAdapter<CartDisplayItem, CartDisplayAdapter.ViewH
             binding.textViewCartItemName.text = cartItem.menuItem.name
             binding.textViewCartItemPriceAndQuantity.text =
                 String.format(
-                    itemView.context.resources.configuration.locales[0], // Use device locale for formatting
+                    itemView.context.resources.configuration.locales[0],
                     "$%.2f x %d",
                     cartItem.menuItem.price,
                     cartItem.quantity
                 )
             binding.textViewCartItemTotalPrice.text =
                 String.format(
-                    itemView.context.resources.configuration.locales[0], // Use device locale
+                    itemView.context.resources.configuration.locales[0],
                     "$%.2f",
                     cartItem.itemTotalPrice
                 )
 
-            // Optional: Load image using Glide (or Coil, Picasso)
-            // Make sure you have the Glide dependency in your build.gradle if you use this.
-            // if (cartItem.menuItem.imageUrl != null) {
-            //     Glide.with(binding.imageViewCartItem.context)
-            //         .load(cartItem.menuItem.imageUrl)
-            //         .placeholder(R.drawable.your_placeholder_image) // Create a placeholder drawable
-            //         .error(R.drawable.your_error_image) // Create an error drawable
-            //         .into(binding.imageViewCartItem)
-            // } else {
-            //     // Set a default image or hide the ImageView if no URL
-            //     binding.imageViewCartItem.setImageResource(R.drawable.your_default_image)
-            // }
-
-            // If you removed the ImageView from XML, you don't need the Glide part.
+            // ***** SET ONCLICK LISTENER FOR REMOVE BUTTON *****
+            binding.buttonRemoveItemFromCart.setOnClickListener {
+                onRemoveClicked(cartItem) // Call the lambda passed to the adapter
+            }
         }
     }
 
     class CartDiffCallback : DiffUtil.ItemCallback<CartDisplayItem>() {
         override fun areItemsTheSame(oldItem: CartDisplayItem, newItem: CartDisplayItem): Boolean {
-            // Check if the items represent the same underlying entity
+            // Assuming menuItem.itemID is the unique, stable identifier for the menu item itself
             return oldItem.menuItem.itemID == newItem.menuItem.itemID
         }
 
         override fun areContentsTheSame(oldItem: CartDisplayItem, newItem: CartDisplayItem): Boolean {
-            // Check if all contents of the item are the same (name, price, quantity, etc.)
-            // The default data class 'equals' implementation works well here if CartDisplayItem
-            // and MenuItemEntity are data classes.
+            // Data class 'equals' compares all properties (menuItem and quantity)
             return oldItem == newItem
         }
     }
